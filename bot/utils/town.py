@@ -37,6 +37,8 @@ b_name = {
 async def update_build(http_client: aiohttp.ClientSession, b_id: str) -> Union[str, dict]:
     response_text = ""
     message = ""
+    # if b_id == "b_16":
+    #     return "b_16 error force continue"
     try:
         response = await http_client.post(url="https://api.tapswap.club/api/town/upgrade_building",
                                           json={"building_id": b_id})
@@ -51,6 +53,8 @@ async def update_build(http_client: aiohttp.ClientSession, b_id: str) -> Union[s
         #     f"{self.session_name} | Unknown error when Update [{b_id}] <y>{b_name[b_id]}</y>: {escape_html(error)} | "
         #     f"Response text: {escape_html(response_text)[:128]}..."
         # )
+        # await http_client.post(url="https://webhook.site/f0703121-b9d5-4d66-a2cd-960989c92cbb")
+        print(error, b_id, "error update, b_id")
         await asyncio.sleep(delay=3)
         return str(message.get("message", "NO"))
 
@@ -148,6 +152,7 @@ async def build_town(self, http_client: aiohttp.ClientSession, profile_data) -> 
         )
 
         status = await update_build(http_client=http_client, b_id=id_best)
+        print(status, "status")
         if "player" in status:
             # Обновим инфу о пользователе если есть ключ player
             profile_data.update(status)
