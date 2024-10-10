@@ -53,10 +53,22 @@ async def update_build(http_client: aiohttp.ClientSession, b_id: str) -> Union[s
         #     f"{self.session_name} | Unknown error when Update [{b_id}] <y>{b_name[b_id]}</y>: {escape_html(error)} | "
         #     f"Response text: {escape_html(response_text)[:128]}..."
         # )
-        # await http_client.post(url="https://webhook.site/f0703121-b9d5-4d66-a2cd-960989c92cbb")
         print(error, b_id, "error update, b_id")
         await asyncio.sleep(delay=3)
-        return "error in b_id"
+        
+        if hasattr(error, 'response'):
+            error_response = await error.response.text()  # Get the error response text
+            print(f"Error response: {error_response}")
+
+            # Attempt to load the error response as JSON to extract the message
+            try:
+                error_message = json.loads(error_response).get("message", "NO")
+            except json.JSONDecodeError:
+                error_message = "Failed to decode error response as JSON"
+            
+            print(f"Error response error_message: {error_message}")
+        
+        return "error in b_id ngu ngu"
         return str(message.get("message", "NO"))
 
 
