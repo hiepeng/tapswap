@@ -165,7 +165,6 @@ async def build_town(self, http_client: aiohttp.ClientSession, profile_data) -> 
         )
 
         status = await update_build(http_client=http_client, b_id=id_best)
-        print(status, "status")
         if "player" in status:
             # Обновим инфу о пользователе если есть ключ player
             profile_data.update(status)
