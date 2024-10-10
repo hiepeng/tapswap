@@ -56,6 +56,7 @@ async def update_build(http_client: aiohttp.ClientSession, b_id: str) -> Union[s
         # await http_client.post(url="https://webhook.site/f0703121-b9d5-4d66-a2cd-960989c92cbb")
         print(error, b_id, "error update, b_id")
         await asyncio.sleep(delay=3)
+        return "error in b_id"
         return str(message.get("message", "NO"))
 
 
